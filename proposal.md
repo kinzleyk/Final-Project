@@ -1,5 +1,5 @@
-# Title
-Final Project - Character Editor
+# Final Project - Character Editor
+
 ## Repository
 https://github.com/kinzleyk/Final-Project.git
 
