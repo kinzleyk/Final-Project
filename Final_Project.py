@@ -66,17 +66,31 @@ def draw_button(rectangle, label):
     )
 
     text_image = font.render(label, True, "white")
-    text_position = text_image.get.rect(
+    text_position = text_image.get_rect(
         center=rectangle.center
     )
     screen.blit(text_image, text_position)
-    
+
 running = True
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                if hair_previous.collidepoint(event.pos):
+                    hair_index = (hair_index - 1) % len(hair)
+                elif hair_next.collidepoint(event.pos):
+                    hair_index = (hair_index + 1) % len(hair) 
+                if face_previous.collidepoint(event.pos):
+                    face_index = (face_index - 1) % len(faces)
+                elif face_next.collidepoint(event.pos):
+                    face_index = (face_index + 1) % len(faces) 
+                if outfit_previous.collidepoint(event.pos):
+                    outfit_index = (outfit_index - 1) % len(outfits)
+                elif outfit_next.collidepoint(event.pos):
+                    outfit_index = (outfit_index + 1) % len(outfits) 
 
     screen.fill ("#F4F0FA")
 
@@ -84,6 +98,14 @@ while running:
     screen.blit(outfits[outfit_index], PREVIEW_POSITION)
     screen.blit(faces[face_index], PREVIEW_POSITION)
     screen.blit(hair[hair_index], PREVIEW_POSITION)
+
+    draw_text("Hairstyle", (510, 150))
+    draw_button(hair_previous, "<")
+    draw_button(hair_next, ">")
+    draw_text(
+        f"{hair_index + 1} / {len(hair)}",
+        (630, 205),
+    )
 
     pygame.display.flip()
     clock.tick(60)
