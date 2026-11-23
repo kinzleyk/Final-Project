@@ -53,7 +53,7 @@ face_next = pygame.Rect(760, 310, 60, 50)
 outfit_previous = pygame.Rect(510, 430, 60, 50)
 outfit_next = pygame.Rect(760, 430, 60, 50)
 
-reset_button = pygame.Rect(550, 520, 230, 50)
+reset_button = pygame.Rect(480, 530, 190, 50)
 export_button = pygame.Rect(685, 530, 190, 50)
 
 def draw_text(text, position):
@@ -163,6 +163,7 @@ while running:
         )
 
     draw_button(reset_button, "Reset character")
+    draw_button(export_button, "Export PNG")
 
     pygame.display.flip()
     clock.tick(60)
