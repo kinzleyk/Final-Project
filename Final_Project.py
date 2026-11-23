@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import datetime
 
 import pygame
 
@@ -9,10 +10,12 @@ pygame.display.set_caption("Character Design Editor")
 clock = pygame.time.Clock()
 
 ASSET_FOLDER = Path(__file__).resolve().parent / "assets"
+EXPORT_FOLDER = Path(__file__).resolve().parent / "exports"
 PREVIEW_POSITION = (40, 110)
 
 font = pygame.font.Font(None, 32)
 title_font = pygame.font.Font(None, 42)
+small_font = pygame.font.Font(None, 22)
 
 
 def load_image(path):
@@ -51,6 +54,7 @@ outfit_previous = pygame.Rect(510, 430, 60, 50)
 outfit_next = pygame.Rect(760, 430, 60, 50)
 
 reset_button = pygame.Rect(550, 520, 230, 50)
+export_button = pygame.Rect(685, 530, 190, 50)
 
 def draw_text(text, position):
     text_image = font.render(text, True, "#30283E")
@@ -72,6 +76,26 @@ def draw_button(rectangle, label):
         center=rectangle.center
     )
     screen.blit(text_image, text_position)
+
+def export_character():
+    EXPORT_FOLDER.mkdir(parents=True, exist_ok=True)
+#transparent canvas
+    character = pygame.Surface(
+        base.get_size(), pygame.SRCALPHA
+    )
+    character.fill((0, 0, 0, 0))
+#Layers onto canvas
+    character.blit(base, (0,0))
+    character.blit(outfits[outfit_index], (0,0))
+    character.blit(faces[face_index], (0,0))
+    character.blit(hair[hair_index], (0,0))
+
+    export_path = EXPORT_FOLDER / f"character.png"
+
+    pygame.image.save(character, str(export_path))
+
+    return export_path
+
 
 running = True
 
@@ -97,6 +121,15 @@ while running:
                     hair_index = 0
                     face_index = 0
                     outfit_index = 0
+                elif export_button.collidepoint(event.pos):
+                    try:
+                        saved_path = export_character()
+                        status_message = "PNG saved in the exports file"
+                        print(f"Saved PNG: {saved_path}")
+
+                    except (OSError, pygame.error) as error:
+                        status_message = "Export failed. See terminal."
+                        print(f"Could not eport PNG: {error}")
 
     screen.fill ("#F4F0FA")
 
@@ -130,7 +163,7 @@ while running:
         )
 
     draw_button(reset_button, "Reset character")
-    
+
     pygame.display.flip()
     clock.tick(60)
 
