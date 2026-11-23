@@ -1,5 +1,5 @@
 from pathlib import Path
-from datetime import datetime
+
 
 import pygame
 
@@ -90,7 +90,14 @@ def export_character():
     character.blit(faces[face_index], (0,0))
     character.blit(hair[hair_index], (0,0))
 
-    export_path = EXPORT_FOLDER / f"character.png"
+    number = 1
+
+    export_path = EXPORT_FOLDER / f"character_{number}.png"
+
+    while export_path.exists():
+        number += 1
+        export_path = EXPORT_FOLDER / f"character_{number}.png"
+
 
     pygame.image.save(character, str(export_path))
 
