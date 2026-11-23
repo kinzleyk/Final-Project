@@ -50,6 +50,8 @@ face_next = pygame.Rect(760, 310, 60, 50)
 outfit_previous = pygame.Rect(510, 430, 60, 50)
 outfit_next = pygame.Rect(760, 430, 60, 50)
 
+reset_button = pygame.Rect(550, 520, 230, 50)
+
 def draw_text(text, position):
     text_image = font.render(text, True, "#30283E")
     screen.blit(text_image, position)
@@ -91,6 +93,10 @@ while running:
                     outfit_index = (outfit_index - 1) % len(outfits)
                 elif outfit_next.collidepoint(event.pos):
                     outfit_index = (outfit_index + 1) % len(outfits) 
+                elif reset_button.collidepoint(event.pos):
+                    hair_index = 0
+                    face_index = 0
+                    outfit_index = 0
 
     screen.fill ("#F4F0FA")
 
@@ -122,6 +128,9 @@ while running:
             f"{outfit_index + 1} / {len(outfits)}",
             (630, 445),
         )
+
+    draw_button(reset_button, "Reset character")
+    
     pygame.display.flip()
     clock.tick(60)
 
