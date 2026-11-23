@@ -103,10 +103,25 @@ while running:
     draw_button(hair_previous, "<")
     draw_button(hair_next, ">")
     draw_text(
-        f"{hair_index + 1} / {len(hair)}",
-        (630, 205),
-    )
+            f"{hair_index + 1} / {len(hair)}",
+            (630, 205),
+        )
 
+    draw_text("Expression", (510, 270))
+    draw_button(face_previous, "<")
+    draw_button(face_next, ">")
+    draw_text(
+            f"{face_index + 1} / {len(faces)}",
+            (630, 325),
+        )
+
+    draw_text("Outfit", (510, 390))
+    draw_button(outfit_previous, "<")
+    draw_button(outfit_next, ">")
+    draw_text(
+            f"{outfit_index + 1} / {len(outfits)}",
+            (630, 445),
+        )
     pygame.display.flip()
     clock.tick(60)
 
